@@ -1,0 +1,22 @@
+<h1>Login to MoGsClash</h1>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">></span></li> 
+  <li><%= link_to "Login", new_user_session_path %></span></li>   
+</ul>
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+  <div class="control-group <% if f.object.errors['nickname'].present? %><%= 'error' %><% end %>">
+    <div class="control-group"><%= f.label :nickname, "Username", class: 'control-label required' %>
+      <%= f.text_field :nickname, :autofocus => true %>
+    </div>
+  </div>  
+
+  <div class="control-group <% if f.object.errors['password'].present? %><%= 'error' %><% end %>">
+    <div class="control-group">
+      <%= f.label :password, class: 'control-label required' %>
+      <%= f.password_field :password %>
+    </div>
+  </div>
+
+  <div><%= f.submit "Sign in", class: 'btn btn-primary' %></div>
+<% end %>

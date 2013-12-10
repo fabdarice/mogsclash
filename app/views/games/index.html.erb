@@ -1,0 +1,135 @@
+<script type="text/javascript">
+  $(function() {
+    $(".challenge").click(function() {
+      var challenger_id = $(this).parent('a').attr("name");
+
+      $.ajax({
+        url: '/games/challenge/' + challenger_id,
+        type: 'get',
+        dataType: 'script'
+      });
+      return false;
+     
+    });
+  }); 
+
+  $(function() {
+    $(".accept_challenge").click(function() {
+      var user_id = $(this).parent('a').attr("name");
+
+      $.ajax({
+        url: '/games/accept_challenge/' + user_id,
+        type: 'get',
+        dataType: 'script'
+      });
+      return false;
+     
+    });
+  });   
+
+</script>  
+
+<h1>Challenge</h1>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">></span></li>
+  <li><a href="#">Library</a> <span class="divider">></span></li>
+  <li class="active">Data</li>
+</ul>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Nb Win</th>
+      <th>Nb Lose</th>
+      <th>Challenge</th>
+    </tr>  
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>1</td>
+        <td><%= user.nickname %></td>
+        <td><%= user.nb_victory %></td>
+        <td><%= user.nb_defeat %></td>
+        <td>
+          <% if user != current_user %> 
+            <% is_challengable = true %>
+            <% is_waiting = false %>
+            <% is_acceptable = false %>
+            <% is_in_progress = false %>
+            <% is_enter_results = false %>
+            <% is_validate = false %>
+            <% is_waiting_validation = false %>
+
+            <% current_user.games.each do |game| %>              
+              <% if game.challenger == user and game.status == "Waiting" %>
+                <% is_challengable = false %>      
+                <% is_waiting = true %>
+              <% else %>              
+                <% if game.challenger == user and game.status == "Enter Results" %>
+                  <% is_challengable = false %>
+                  <% is_enter_results = true %>             
+                <% else %>
+                  <% if game.challenger == user and game.status == "Validate" %>
+                    <% is_challengable = false %>              
+                    <% is_waiting_validation = true %>
+                  <% end %>
+                <% end %>
+
+              <% end %>  
+            <% end %>
+
+            <% current_user.inverse_games.each do |inverse_game| %>
+              <% if inverse_game.user == user and inverse_game.status == "Waiting" %>
+                <% is_challengable = false %>
+                <% is_acceptable = true %>
+              <% else %>
+                <% if inverse_game.user == user and inverse_game.status == "Enter Results" %>
+                  <% is_challengable = false %>
+                  <% is_in_progress = true %>
+                  
+                <% else %>
+                  <% if inverse_game.user == user and inverse_game.status == "Validate" %>
+                    <% is_challengable = false %>
+                    <% is_validate = true %>
+                    
+                  <% end %>  
+                <% end %>
+              <% end %>  
+            <% end %>  
+
+            <% if is_challengable %>  
+              <a href="#" name='<%= user.id %>'><span class="label label-info challenge">Challenge</span></a> 
+            <% else %>
+              <% if is_waiting %>
+                <span class="label label-warning">Waiting</span> 
+              <% else %>
+                <% if is_acceptable %>
+                  <a href="#" name='<%= user.id %>'><span class="label label-success accept_challenge">Accept</span></a> 
+                <% else %>
+                  <% if is_in_progress %>
+                    <span class="label">In Progress</span>   
+                  <% else %>
+                    <% if is_enter_results %>
+                      <%= link_to raw('<span class="label label-important">Enter Results</span>'), enter_results_game_path(user) %>
+                    <% else %>
+                      <% if is_validate %>
+                        <%= link_to raw('<span class="label label-important">Validate</span>'), enter_results_game_path(user) %>
+                      <% else %>
+                          <% if is_waiting_validation %>
+                            <span class="label label-inverse">Waiting Validation</span>
+                          <% end %>
+                      <% end %>
+                    <% end %>  
+                  <% end %>  
+                <% end %>
+              <% end %> 
+            <% end %>  
+          <% end %>  
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

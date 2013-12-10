@@ -1,0 +1,55 @@
+<h1>Challenge<small>Enter a result</small></h1>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">></span></li>
+  <li><a href="#">Library</a> <span class="divider">></span></li>
+  <li class="active">Data</li>
+</ul>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>P1</th>
+      <th>Champ P1</th>
+      <th>S1</th>
+      <th> - </th>
+      <th>S2</th>
+      <th>Champ P2</th>
+      <th>P2</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @games.each do |game| %>
+      <%= form_for game do |f| %>
+        <tr>        
+          <td><strong><%= f.object.user.nickname %></strong></td>
+          <td><%= f.autocomplete_field :user_1_champ,autocomplete_champion_name_games_path, class: 'span2' %></td>
+          <td><%= f.text_field :user_1_score, class: 'span1' %></td>
+          <td> vs </td>
+          <td><%= f.text_field :user_2_score, class: 'span1' %></td>
+          <td><%= f.autocomplete_field :user_2_champ, autocomplete_champion_name_games_path, class: 'span2' %></td>
+          <td><strong><%= f.object.challenger.nickname %></strong></td>
+          <td><%= f.submit "Update" %></td>
+        </tr>                
+      <% end %>
+    <% end %>
+
+    <% @validate_games.each do |game| %>
+      <%= form_for game do |f| %>
+        <tr>        
+          <td><strong><%= f.object.user.nickname %></strong></td>
+          <td><%= f.autocomplete_field :user_1_champ,autocomplete_champion_name_games_path, class: 'span2', :disabled => true %></td>
+          <td><%= f.text_field :user_1_score, class: 'span1', :disabled => true %></td>
+          <td> vs </td>
+          <td><%= f.text_field :user_2_score, class: 'span1', :disabled => true %></td>
+          <td><%= f.autocomplete_field :user_2_champ, autocomplete_champion_name_games_path, class: 'span2', :disabled => true %></td>
+          <td><strong><%= f.object.challenger.nickname %></strong></td>
+          <td>
+            <%= link_to "Yes", validate_game_path(game) %>
+            <%= link_to "No", unvalidate_game_path(game) %>
+          </td>  
+        </tr>                
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

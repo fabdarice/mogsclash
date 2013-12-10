@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MogsClash</title>
+  <%= stylesheet_link_tag    "application", "jquery-ui-1.10.3.custom", :media => "all" %>
+  <%= javascript_include_tag "application", "autocomplete-rails", "jquery-1.9.1", "jquery-ui-1.10.3.custom", "jquery-ui-1.10.3.custom.min" %>
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="navbar" >
+  
+    <div class="navbar-inner" style='padding-left: 60px;'>
+      <%= link_to image_tag('/assets/mogs_clash_logo.png'), root_path %>
+      <ul class="nav">
+        
+        <% if !user_signed_in? %>
+          <li><%= link_to "Login", new_user_session_path %></li>
+          <li><%= link_to "Register", new_user_registration_path %></li>     
+        <% else %>  
+          <li><a href="#"><%= current_user.nickname %></a></li> 
+        <% end %>  
+               
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- MENU -->
+<div id="menu">
+  <ul class='menu_list'>   
+    <% if current_page?(root_path) %>
+      <%= link_to raw("<li class='active'><i class='icon-home'></i>Home</li>") , root_path %>    
+    <% else %>
+      <%= link_to raw("<li><i class='icon-home'></i>Home</li>") , root_path %>    
+    <% end %>
+    <li><i class="icon-tasks"></i>Results</li>
+    <li><i class="icon-fire"></i>Statistics</li>
+    <li><i class="icon-play-circle"></i>Stream</li>
+    <li><i class="icon-bookmark"></i>Tournament</li>
+    <li><i class="icon-info-sign"></i>Rules</li>
+  </ul>
+</div>
+
+<!-- BODY -->
+<div id="main_content">
+  <%= yield %>
+</div>
+
+<div id="newsfeed">
+  <h3>Recent Activities</h3>
+  <% @newsfeed = Feednews.limit(16).order("created_at DESC") %>
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Activity</th>
+        </tr>
+      </thead>    
+      <tbody>
+        <% @newsfeed.each do |news| %>
+          <tr>
+            <td style='width: 80px;'><%= time_ago_in_words(news.created_at) %></td>
+            <td><%= raw news.content %></td>
+          </tr>  
+        <% end %>
+      </tbody>
+  </table> 
+</div>
+
+<div id="footer">
+  MoGsClash Copyright 2013
+</div>
+
+</body>
+</html>
