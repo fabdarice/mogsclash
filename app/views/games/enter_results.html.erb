@@ -23,11 +23,11 @@
       <%= form_for game do |f| %>
         <tr>        
           <td><strong><%= f.object.user.nickname %></strong></td>
-          <td><%= f.autocomplete_field :user_1_champ,autocomplete_champion_name_games_path, class: 'span2' %></td>
+          <td><%= f.text_field :user_1_champ, class: 'span2' %></td>
           <td><%= f.text_field :user_1_score, class: 'span1' %></td>
           <td> vs </td>
           <td><%= f.text_field :user_2_score, class: 'span1' %></td>
-          <td><%= f.autocomplete_field :user_2_champ, autocomplete_champion_name_games_path, class: 'span2' %></td>
+          <td><%= f.text_field :user_2_champ, class: 'span2' %></td>
           <td><strong><%= f.object.challenger.nickname %></strong></td>
           <td><%= f.submit "Update" %></td>
         </tr>                
@@ -38,11 +38,11 @@
       <%= form_for game do |f| %>
         <tr>        
           <td><strong><%= f.object.user.nickname %></strong></td>
-          <td><%= f.autocomplete_field :user_1_champ,autocomplete_champion_name_games_path, class: 'span2', :disabled => true %></td>
+          <td><%= f.text_field :user_1_champ, class: 'span2', :disabled => true %></td>
           <td><%= f.text_field :user_1_score, class: 'span1', :disabled => true %></td>
           <td> vs </td>
           <td><%= f.text_field :user_2_score, class: 'span1', :disabled => true %></td>
-          <td><%= f.autocomplete_field :user_2_champ, autocomplete_champion_name_games_path, class: 'span2', :disabled => true %></td>
+          <td><%= f.text_field :user_2_champ, class: 'span2', :disabled => true %></td>
           <td><strong><%= f.object.challenger.nickname %></strong></td>
           <td>
             <%= link_to "Yes", validate_game_path(game) %>

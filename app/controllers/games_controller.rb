@@ -1,7 +1,6 @@
 class GamesController < ApplicationController
 
   before_filter :authenticate_user!, :only => [:accept_challenge, :new, :enter_results, :update, :validate_game, :unvalidate_game]
-  autocomplete :champion, :name
 
   def new    
     @challenger = User.find(params[:challenger_id])
