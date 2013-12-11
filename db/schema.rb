@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131211022721) do
+ActiveRecord::Schema.define(:version => 20131211031831) do
 
   create_table "champions", :force => true do |t|
     t.string   "name"
@@ -26,16 +26,16 @@ ActiveRecord::Schema.define(:version => 20131211022721) do
   end
 
   create_table "games", :force => true do |t|
-    t.integer  "user_id",       :null => false
-    t.integer  "challenger_id", :null => false
+    t.integer  "user_id",                      :null => false
+    t.integer  "challenger_id",                :null => false
     t.integer  "winner_id"
     t.string   "user_1_champ"
     t.string   "user_2_champ"
-    t.integer  "user_1_score"
-    t.integer  "user_2_score"
+    t.integer  "user_1_score",  :default => 0
+    t.integer  "user_2_score",  :default => 0
     t.string   "status"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "points_diff"
   end
 
