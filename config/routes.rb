@@ -21,6 +21,8 @@ MogsClash::Application.routes.draw do
 
   get 'results', to: 'results#index', as: :results
 
+  get 'stream', to: 'stream#show', as: :stream
+
     
   
   # The priority is based upon order of creation:

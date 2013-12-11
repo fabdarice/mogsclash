@@ -44,7 +44,13 @@
     <% end %>
     
     <li><i class="icon-fire"></i>Statistics</li>
-    <li><i class="icon-play-circle"></i>Stream</li>
+
+    <% if current_page?(stream_path) %>
+      <%= link_to raw("<li class='active'><i class='icon-play-circle'></i>Stream</li>") , stream_path %>    
+    <% else %>
+      <%= link_to raw("<li><i class='icon-play-circle'></i>Stream</li>") , stream_path %>    
+    <% end %>
+
     <li><i class="icon-bookmark"></i>Tournament</li>
     <% if current_page?(rules_path) %>
       <%= link_to raw("<li class='active'><i class='icon-info-sign'></i>Rules</li>") , rules_path %>    
