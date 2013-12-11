@@ -3,6 +3,11 @@
   <li><%= link_to "Home", root_path %><span class="divider">></span></li> 
   <li><%= link_to "Login", new_user_session_path %></span></li>   
 </ul>
+
+<div class="alert alert-info">
+  The authentification system is case sensitive. Please make sure to type the correct Username.
+</div>
+
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
   <div class="control-group <% if f.object.errors['nickname'].present? %><%= 'error' %><% end %>">
