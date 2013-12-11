@@ -42,28 +42,28 @@
   <thead>
     <tr>
       <th>Rank</th>
+      <th>ELO</th>
       <th>Username</th>
-      <th>Nb Win</th>
-      <th>Nb Lose</th>
-      <th>Gnrl Win</th>
-      <th>Gnrl Lose</th>
+      <th>Win</th>
+      <th>Lose</th>
+      <th> + </th>
+      <th> - </th>
       <th>Challenge</th>
     </tr>  
   </thead>
   <tbody>
+    <% rank = 0 %>
     <% @users.each do |user| %>
+      <% rank = rank + 1 %>
       <tr>
         <td>
-          <% if user.rank.present? %>
-            <% if user.rank == 1 %>
-              <%= image_tag '/assets/icon_king.png', style: 'width: 25px; height:25px;' %>
-            <% else %>
-              <%= user.rank %>
-            <% end %>
-          <% else %>  
-            ?
+          <% if rank == 1 %>            
+            <%= image_tag '/assets/icon_king.png', style: 'width: 25px; height:25px;' %>
+          <% else %>
+            <%= rank %>            
           <% end %>
         </td>
+        <td><%= user.points %></td>
         <td><%= user.nickname %></td>
         <td><%= user.nb_victory %></td>
         <td><%= user.nb_defeat %></td>
@@ -153,4 +153,34 @@
 </table>
 <br>
 
-<h1>Last Results</h1>
+<h1>Last Results<small><%= link_to "see all results", results_path %></small></h1>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">></span></li>  
+  <li><%= link_to "Results", results_path %></span></li>  
+</ul>
+<table class="table table-centered table-striped">
+  <tbody>
+    <% @games.each do |game| %>
+    <tr>
+        <% winner = User.find(game.winner_id) %>        
+        <% if winner == game.user %>
+          <td><%= game.user.points %> (<span class='victory'>+<%= game.points_diff %></span>)</td>
+          <td><strong><%= game.user.nickname %></strong></td>          
+        <% else %>
+          <td><%= game.user.points %> (<span class='defeat'>-<%= game.points_diff %></span>)</td>      
+          <td><%= game.user.nickname %></td>          
+        <% end %>
+        <td><%= game.user_1_score %></td>
+        <td> : </td>
+        <td><%= game.user_2_score %></td>
+        <% if winner == game.challenger %>
+          <td><strong><%= game.challenger.nickname %></strong></td>
+          <td><%= game.challenger.points %> (<span class='victory'>+<%= game.points_diff %></span>)</td>
+        <% else %>
+          <td><%= game.challenger.nickname %></td>
+          <td><%= game.challenger.points %> (<span class='defeat'>-<%= game.points_diff %></span>)</td>      
+        <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

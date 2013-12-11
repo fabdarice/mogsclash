@@ -9,11 +9,11 @@
   <thead>
     <tr>
       <th>P1</th>
-      <th>Champ P1</th>
-      <th>S1</th>
+      
+      <th>Score 1</th>
       <th> - </th>
-      <th>S2</th>
-      <th>Champ P2</th>
+      <th>Score 2</th>
+      
       <th>P2</th>
       <th>Action</th>
     </tr>
@@ -22,12 +22,10 @@
     <% @games.each do |game| %>
       <%= form_for game do |f| %>
         <tr>        
-          <td><strong><%= f.object.user.nickname %></strong></td>
-          <td><%= f.text_field :user_1_champ, class: 'span2' %></td>
+          <td><strong><%= f.object.user.nickname %></strong></td>          
           <td><%= f.text_field :user_1_score, class: 'span1' %></td>
           <td> vs </td>
-          <td><%= f.text_field :user_2_score, class: 'span1' %></td>
-          <td><%= f.text_field :user_2_champ, class: 'span2' %></td>
+          <td><%= f.text_field :user_2_score, class: 'span1' %></td>          
           <td><strong><%= f.object.challenger.nickname %></strong></td>
           <td><%= f.submit "Update" %></td>
         </tr>                
@@ -37,12 +35,10 @@
     <% @validate_games.each do |game| %>
       <%= form_for game do |f| %>
         <tr>        
-          <td><strong><%= f.object.user.nickname %></strong></td>
-          <td><%= f.text_field :user_1_champ, class: 'span2', :disabled => true %></td>
+          <td><strong><%= f.object.user.nickname %></strong></td>          
           <td><%= f.text_field :user_1_score, class: 'span1', :disabled => true %></td>
           <td> vs </td>
-          <td><%= f.text_field :user_2_score, class: 'span1', :disabled => true %></td>
-          <td><%= f.text_field :user_2_champ, class: 'span2', :disabled => true %></td>
+          <td><%= f.text_field :user_2_score, class: 'span1', :disabled => true %></td>      
           <td><strong><%= f.object.challenger.nickname %></strong></td>
           <td>
             <%= link_to "Yes", validate_game_path(game) %>

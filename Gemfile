@@ -14,6 +14,8 @@ gem "twitter-bootstrap-rails"
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete'
 
+gem 'will_paginate', '~> 3.0'
+
 group :production do
   
   gem 'thin'

@@ -19,7 +19,8 @@
           <li><%= link_to "Login", new_user_session_path %></li>
           <li><%= link_to "Register", new_user_registration_path %></li>     
         <% else %>  
-          <li><a href="#"><%= current_user.nickname %></a></li> 
+          <li><a href="#"><%= current_user.nickname %></a></li>
+          <li><%= link_to "Log Out", destroy_user_session_path, :method => :delete %></li> 
         <% end %>  
                
       </ul>
@@ -35,11 +36,21 @@
     <% else %>
       <%= link_to raw("<li><i class='icon-home'></i>Home</li>") , root_path %>    
     <% end %>
-    <li><i class="icon-tasks"></i>Results</li>
+
+    <% if current_page?(results_path) %>
+      <%= link_to raw("<li class='active'><i class='icon-tasks'></i>Results</li>") , results_path %>    
+    <% else %>
+      <%= link_to raw("<li><i class='icon-tasks'></i>Results</li>") , results_path %>    
+    <% end %>
+    
     <li><i class="icon-fire"></i>Statistics</li>
     <li><i class="icon-play-circle"></i>Stream</li>
     <li><i class="icon-bookmark"></i>Tournament</li>
-    <li><i class="icon-info-sign"></i>Rules</li>
+    <% if current_page?(rules_path) %>
+      <%= link_to raw("<li class='active'><i class='icon-info-sign'></i>Rules</li>") , rules_path %>    
+    <% else %>
+      <%= link_to raw("<li><i class='icon-info-sign'></i>Rules</li>") , rules_path %>    
+    <% end %>    
   </ul>
 </div>
 
@@ -50,7 +61,7 @@
 
 <div id="newsfeed">
   <h3>Recent Activities</h3>
-  <% @newsfeed = Feednews.limit(16).order("created_at DESC") %>
+  <% @newsfeed = Feednews.limit(15).order("created_at DESC") %>
   <table class="table table-striped">
       <thead>
         <tr>

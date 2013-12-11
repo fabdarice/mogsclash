@@ -15,7 +15,7 @@ form label.required:after {
 #menu {
   background-color: #4B4A4D;
   width: 250px;
-  height: 1000px;
+  height: 1100px;
   float: left;
 }
 
@@ -40,11 +40,12 @@ form label.required:after {
 
 #main_content h1 small {
   color: #9A9A9C;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "Segoe UI";
   margin-top: 0px;
   font-weight: 100;
   padding-left: 5px;
+  text-transform: uppercase;
 }
 
 .menu_list {
@@ -76,6 +77,14 @@ form label.required:after {
 
 .menu_list a, .menu_list a:hover {
   text-decoration: none;
+}
+
+.victory {
+  color: green;
+}
+
+.defeat {
+  color: red;
 }
 
 #newsfeed {

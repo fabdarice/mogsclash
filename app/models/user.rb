@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_many :inverse_games, :class_name => "Game", :foreign_key => "challenger_id"
   has_many :inverse_challengers, :through => :inverse_games, :source => :user
 
+  
+
   def nb_victory
     nb_victory = Game.where(:winner_id => self.id, :status => 'Done').count
   end

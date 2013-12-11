@@ -17,6 +17,10 @@ MogsClash::Application.routes.draw do
     get :autocomplete_champion_name, :on => :collection
   end
 
+  get 'rules', to: 'rules#index', as: :rules
+
+  get 'results', to: 'results#index', as: :results
+
     
   
   # The priority is based upon order of creation:

@@ -1,0 +1,35 @@
+<h1>All Results</h1>
+<ul class="breadcrumb">
+  <li><%= link_to "Home", root_path %><span class="divider">></span></li>  
+  <li><%= link_to "Results", results_path %></span></li>  
+</ul>
+<table class="table table-centered table-striped">
+  <tbody>
+    <% @games.each do |game| %>
+    <tr>
+        <% winner = User.find(game.winner_id) %>        
+        <% if winner == game.user %>
+          <td><%= game.user.points %> (<span class='victory'>+<%= game.points_diff %></span>)</td>
+          <td><strong><%= game.user.nickname %></strong></td>          
+        <% else %>
+          <td><%= game.user.points %> (<span class='defeat'>-<%= game.points_diff %></span>)</td>      
+          <td><%= game.user.nickname %></td>          
+        <% end %>
+        <td><%= game.user_1_score %></td>
+        <td> : </td>
+        <td><%= game.user_2_score %></td>
+        <% if winner == game.challenger %>
+          <td><strong><%= game.challenger.nickname %></strong></td>
+          <td><%= game.challenger.points %> (<span class='victory'>+<%= game.points_diff %></span>)</td>
+        <% else %>
+          <td><%= game.challenger.nickname %></td>
+          <td><%= game.challenger.points %> (<span class='defeat'>-<%= game.points_diff %></span>)</td>      
+        <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @games %>
+
+
